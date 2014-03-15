@@ -7,5 +7,11 @@
  * 
  * Simple linked list implementation
  */
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node_t {
+  struct node_t *next, *prev;
+};
 
 #endif
