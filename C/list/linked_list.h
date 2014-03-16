@@ -11,12 +11,12 @@
 #include <stdlib.h>
 
 /**
- * A macro that will declare and initialize a list node
+ * A macro that will initialize a list node
  *
- * @name: The name of the node_t type
+ * @ptr: Pointer to the node
  */
-#define LIST_NODE(name) \
-  struct node_t name = { &(name), &(name) }
+#define LIST_NODE_INIT(ptr) \
+  (ptr)->next = (ptr); (ptr)->prev = (ptr)
 
 /**
  * A macro for getting a node within the list
@@ -25,7 +25,7 @@
  * @type:   The type of the struct the "ptr" is embedded in
  * @member: The name of the node_t within the struct.
  */
-#define get_list_node(ptr, type, member) {(               \
+#define get_list_node(ptr, type, member) ({               \
     const typeof( ((type *)0)->member ) *__mptr = (ptr);  \
     (type *)( (char *)__mptr - offsetof(type, member) );  \
     })
@@ -47,7 +47,7 @@ struct node_t {
  *
  * @list: A node, which will be initialized
  */
-static void init_list_node(struct node_t *list);
+void init_list_node(struct node_t *list);
 
 /**
  * Add a new node between two known consecutive nodes in the list.
@@ -72,7 +72,7 @@ static inline void __list_add(struct node_t *new,
  * @new: The new node to insert
  * @old: The old node, which the new node will be appended to
  */ 
-static void list_append(struct node_t *new, struct node_t *old);
+void list_append(struct node_t *new, struct node_t *old);
 
 /**
  * Add a new node before an old node. Good for implementing queues.
@@ -80,7 +80,7 @@ static void list_append(struct node_t *new, struct node_t *old);
  * @new: The new node to insert
  * @old: The old node to prepend the new one to.
  */
-static void list_prepend(struct node_t *new, struct node_t *old);
+void list_prepend(struct node_t *new, struct node_t *old);
 
 /**
  * Remove node from a list. This function is only used internally.
@@ -98,6 +98,6 @@ static inline void __list_remove(struct node_t *prev, struct node_t *next) {
  *
  * @node: The node which will be removed from the list
  */
-static void list_remove(struct node_t node);
+void list_remove(struct node_t *node);
 
 #endif
