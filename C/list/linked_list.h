@@ -5,7 +5,8 @@
  * Author: Finnur Smári Torfason
  * Compiler: GCC 4.8.2
  * 
- * Simple linked list implementation
+ * Simple linked list implementation. This implementation of a linked list is 
+ * heavily influenced by the Linux's kernel version of a linked list.
  */
 #include <stdio.h>
 #include <stdlib.h>
