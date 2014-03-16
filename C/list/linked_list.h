@@ -28,7 +28,7 @@ struct node_t {
 static void init_list_node(struct node_t *list);
 
 /**
- * Insert a new node between two known consecutive nodes in the list.
+ * Add a new node between two known consecutive nodes in the list.
  * This function is only used internally.
  *
  * @new:  The new node to insert
@@ -45,7 +45,7 @@ static inline void __list_add(struct node_t *new,
 }
 
 /**
- * Append a new node to an old node. Good for implementing stacks.
+ * Add a new node after an old node. Good for implementing stacks.
  *
  * @new: The new node to insert
  * @old: The old node, which the new node will be appended to
@@ -53,11 +53,27 @@ static inline void __list_add(struct node_t *new,
 static void list_append(struct node_t *new, struct node_t *old);
 
 /**
- * Prepend a new node to an old node. Good for implementing queues.
+ * Add a new node before an old node. Good for implementing queues.
  *
  * @new: The new node to insert
  * @old: The old node to prepend the new one to.
  */
 static void list_prepend(struct node_t *new, struct node_t *old);
+
+/**
+ * Remove node from a list. This function is only used internally.
+ *
+ * @prev: The previous node to the one being removed
+ * @next: The next node to the one being removed
+ */
+static inline void __list_remove(struct node_t *prev, struct node_t *next) {
+  next->prev = prev;
+  prev->next = next;
+}
+
+/**
+ * Remove a node from a list
+ */
+static void list_remove(struct node_t node);
 
 #endif
