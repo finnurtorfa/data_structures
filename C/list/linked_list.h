@@ -12,9 +12,31 @@
 
 /**
  * A macro that will declare and initialize a list node
+ *
+ * @name: The name of the node_t type
  */
 #define LIST_NODE(name) \
   struct node_t name = { &(name), &(name) }
+
+/**
+ * A macro for getting a node within the list
+ *
+ * @ptr:    The &struct node_t pointer
+ * @type:   The type of the struct the "ptr" is embedded in
+ * @member: The name of the node_t within the struct.
+ */
+#define get_list_node(ptr, type, member) {(               \
+    const typeof( ((type *)0)->member ) *__mptr = (ptr);  \
+    (type *)( (char *)__mptr - offsetof(type, member) );  \
+    })
+
+/**
+ * A macro that returns the offset(in bytes) of a member within a struct
+ *
+ * @type:   A struct of a specified type
+ * @member: A member within a struct of a specified type. 
+ */
+#define offsetof(type, member) ((size_t) &((type *)0)->member)
 
 struct node_t {
   struct node_t *next, *prev;
@@ -73,6 +95,8 @@ static inline void __list_remove(struct node_t *prev, struct node_t *next) {
 
 /**
  * Remove a node from a list
+ *
+ * @node: The node which will be removed from the list
  */
 static void list_remove(struct node_t node);
 
