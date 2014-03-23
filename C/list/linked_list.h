@@ -11,34 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
- * A macro that will initialize a list node
- *
- * @ptr: Pointer to the node
- */
-#define LIST_NODE_INIT(ptr) \
-  (ptr)->next = (ptr); (ptr)->prev = (ptr)
-
-/**
- * A macro for getting a node within the list
- *
- * @ptr:    The &struct node_t pointer
- * @type:   The type of the struct the "ptr" is embedded in
- * @member: The name of the node_t within the struct.
- */
-#define get_list_node(ptr, type, member) ({               \
-    const typeof( ((type *)0)->member ) *__mptr = (ptr);  \
-    (type *)( (char *)__mptr - offsetof(type, member) );  \
-    })
-
-/**
- * A macro that returns the offset(in bytes) of a member within a struct
- *
- * @type:   A struct of a specified type
- * @member: A member within a struct of a specified type. 
- */
-#define offsetof(type, member) ((size_t) &((type *)0)->member)
-
 struct node_t {
   struct node_t *next, *prev;
 };
@@ -94,11 +66,64 @@ static inline void __list_remove(struct node_t *prev, struct node_t *next) {
   prev->next = next;
 }
 
-/**
+/** 
  * Remove a node from a list
  *
  * @node: The node which will be removed from the list
  */
 void list_remove(struct node_t *node);
+/**
+ * A macro that will initialize a list node
+ *
+ * @ptr: Pointer to the node
+ */
+#define LIST_NODE_INIT(ptr) \
+  (ptr)->next = (ptr); (ptr)->prev = (ptr)
+
+/**
+ * A macro for getting a node within the list
+ *
+ * @ptr:    The &struct node_t pointer
+ * @type:   The type of the struct the "ptr" is embedded in
+ * @member: The name of the node_t within the struct.
+ */
+#define get_list_node(ptr, type, member)                  \
+  ({                                                      \
+    const typeof( ((type *)0)->member ) *__mptr = (ptr);  \
+    (type *)( (char *)__mptr - offsetof(type, member) );  \
+  })
+
+/**
+ * A macro that returns the offset(in bytes) of a member within a struct
+ *
+ * @type:   A struct of a specified type
+ * @member: A member within a struct of a specified type. 
+ */
+#define offsetof(type, member) ((size_t) &((type *)0)->member)
+
+/**
+ * A macro for iterating safely(against removal that is) through a linked list
+ *
+ * @pos:  A struct node_t pointer to use as a loop cursor
+ * @n:    Another node_t pointer to use as a temporary storage
+ * @head: The head of your list
+ */
+#define for_each(pos, n, head)            \
+  for (pos = (head)->next, n = pos->next; \
+       pos != head;                       \
+       pos = n, n = pos->next)
+
+/**
+ * A macro for iterating safely(against removal that is) through a linked list
+ * in reverse order
+ *
+ * @pos:  A struct node_t pointer to use as a loop cursor
+ * @n:    Another node_t pointer to use as a temporary storage
+ * @head: The head of your list
+ */
+#define for_each_reverse(pos, n, head)    \
+  for (pos = (head)->prev, n = pos->prev; \
+       pos != head;                       \
+       pos = n, n = pos->prev)
 
 #endif
