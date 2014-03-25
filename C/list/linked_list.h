@@ -1,5 +1,4 @@
-#ifndef __LINKED_LIST_H__
-#define __LINKED_LIST_H__
+#pragma once
 /*
  * File: linked_list.h
  * Author: Finnur Smári Torfason
@@ -125,5 +124,3 @@ void list_remove(struct node_t *node);
   for (pos = (head)->prev, n = pos->prev; \
        pos != head;                       \
        pos = n, n = pos->prev)
-
-#endif

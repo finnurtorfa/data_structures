@@ -1,5 +1,3 @@
-#ifndef __DYNAMIC_ARRAY_H__
-#define __DYNAMIC_ARRAY_H__
 /*
  * File: dynamic_array.h
  * Author: Finnur Smári Torfason
@@ -71,4 +69,3 @@ void  d_array_remove_head(struct d_array_t *arr);
  * @pos:  The position of the element to remove
  */
 void  d_array_remove_tail(struct d_array_t *arr, int pos);
-#endif
