@@ -46,10 +46,12 @@ MSG_CREATING_BUILD_DIRS	= Creating build directory:
 ################################################
 
 # Lists
-C_SRC = linked_list.c
+C_SRC  = linked_list.c
+C_SRC += dynamic_array.c
 
 # Tests
-TEST_SRC += test_linked_list.c
+TEST_SRC = test_linked_list.c
+TEST_SRC += test_dynamic_array.c
 
 ### Set source lookup paths
 ################################################
@@ -67,7 +69,7 @@ TEST_OUTPUT = $(TEST_SRC:.c=.out)
 ### Compiler options
 ################################################
 
-C_FLAGS += -W
+C_FLAGS  = -W
 C_FLAGS += -Wall
 C_FLAGS += -Wextra
 C_FLAGS += -Winit-self
@@ -95,9 +97,6 @@ C_FLAGS += -Wundef
 C_FLAGS += $(patsubst %,-I%,$(INCLUDE_DIRS))
 C_FLAGS += -I. 
 C_FLAGS += --std=gnu99
-#C_FLAGS += -MMD 
-#C_FLAGS += -MP
-#C_FLAGS += -MF .dep/$(@F).d
 
 ### Linker options
 ################################################
@@ -108,7 +107,6 @@ LD_FLAGS += -Wl,--discard-all
 LD_FLAGS += -Wl,--no-undefined
 LD_FLAGS += -Wl,--build-id=sha1
 LD_FLAGS += -rdynamic
-
 
 ### Rules
 ###
@@ -124,14 +122,13 @@ LD_FLAGS += -rdynamic
 # Default rule target
 .PHONY: all
 .PRECIOUS : $(C_OBJ)
-all: ALL_CFLAGS = $(C_FLAGS) 
 all: begin version $(BUILD_DIRS) $(C_OBJ) end
 
 # Compile: create object files from C source files.
 $(OBJ_DIR)/%.o : %.c
 	@echo
 	@echo $(MSG_COMPILING) $<
-	$(CC) -c $(ALL_CFLAGS) $< -o $@ 
+	$(CC) -c $(C_FLAGS) $< -o $@ 
 
 # Target: create build directories
 $(BUILD_DIRS) : 
@@ -139,13 +136,12 @@ $(BUILD_DIRS) :
 	@echo $(MSG_CREATING_BUILD_DIRS)
 	- $(MK) $@
 
-test: ALL_CFLAGS = $(C_FLAGS) 
 test: begin version $(BUILD_DIRS) $(C_OBJ) $(TEST_OUTPUT) end
 
 test%.out: $(TEST_OBJ)
 	@echo
 	@echo $(MSG_LINKING) $@
-	$(CC) $(ALL_CFLAGS) $(C_OBJ) $< $(LD_FLAGS) -o $(OUTPUT_DIR)/$@
+	$(CC) $(C_FLAGS) $(C_OBJ) $(OBJ_DIR)/$(@:.out=.o) $(LD_FLAGS) -o $(OUTPUT_DIR)/$@
 
 # Target: clean project.
 clean: begin clean_list end
