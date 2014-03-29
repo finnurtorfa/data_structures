@@ -5,14 +5,14 @@
  *
  * A basic implementation of a dynamic array
  */
+#include <stdlib.h>
 
 #define INIT_SIZE 100
 
 struct d_array_t { 
-  void *data;       // void pointer for the data
+  void **data;      // void pointer for the data
   int size;         // Number of available data points
-  int cnt;          // current data point were at
-  size_t data_size; // Size of each data point. 
+  int used;         // Numver of data points used so far
 };
 
 /**
@@ -20,7 +20,7 @@ struct d_array_t {
  *
  * @arr:  A struct d_array_t pointer to initialize
  */
-void d_array_init(struct d_array_t *arr, size_t data_size);
+int d_array_init(struct d_array_t *arr);
 
 /**
  * Add a new datapoint to the array
@@ -60,7 +60,7 @@ void d_array_remove(struct d_array_t *arr, int pos);
  *
  * @arr:  A struct d_array_t pointer 
  */
-void  d_array_remove_head(struct d_array_t *arr);
+void d_array_remove_head(struct d_array_t *arr);
 
 /**
  * Remove an item from an array's tail
@@ -68,4 +68,11 @@ void  d_array_remove_head(struct d_array_t *arr);
  * @arr:  A struct d_array_t pointer 
  * @pos:  The position of the element to remove
  */
-void  d_array_remove_tail(struct d_array_t *arr, int pos);
+void d_array_remove_tail(struct d_array_t *arr, int pos);
+
+/**
+ * Check if array needs to be resized
+ *
+ * @arr:  A struct d_array_t pointer 
+ */
+void d_array_check_resize(struct d_array_t *arr);
