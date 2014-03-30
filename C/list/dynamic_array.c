@@ -31,11 +31,16 @@ void d_array_add(struct d_array_t *arr, void *item, int pos) {
     arr->data[i+1] = arr->data[i];
   }
 
+  arr->used++;
   arr->data[pos] = item;
 }
 
 void d_array_append(struct d_array_t *arr, void *item) {
   d_array_add(arr, item, arr->used); 
+}
+
+void d_array_prepend(struct d_array_t *arr, void *item) {
+  d_array_add(arr, item, 0); 
 }
 
 void d_array_check_resize(struct d_array_t *arr) {
