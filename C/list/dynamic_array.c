@@ -58,3 +58,35 @@ void d_array_check_resize(struct d_array_t *arr) {
   arr->data = (void *) realloc(arr->data, size * sizeof(void *));
   arr->size = size;
 }
+
+void * d_array_remove(struct d_array_t *arr, int pos) {
+  void *el;
+
+  if ( pos >= arr->used ) {
+    el = arr->data[arr->used--];
+    
+    d_array_check_resize(arr);
+
+    return el;
+  }
+
+  el = arr->data[pos];
+
+  for ( int i = pos; i <= arr->used-1; i++ ) {
+    arr->data[i] = arr->data[i+1];
+  }
+
+  arr->used--;
+
+  d_array_check_resize(arr);
+
+  return el;
+}
+
+void * d_array_remove_head(struct d_array_t *arr) {
+  return d_array_remove(arr, 0);
+}
+
+void * d_array_remove_tail(struct d_array_t *arr) {
+  return d_array_remove(arr, arr->used);
+}

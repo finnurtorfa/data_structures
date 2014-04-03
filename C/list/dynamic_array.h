@@ -48,27 +48,26 @@ void d_array_append(struct d_array_t *arr, void *item);
 void d_array_prepend(struct d_array_t *arr, void *item);
 
 /**
- * Remove an item from an array
+ * Remove an item from an array and returns it
  *
  * @arr:  A struct d_array_t pointer 
  * @pos:  The position in which to add the item
  */
-void d_array_remove(struct d_array_t *arr, int pos);
+void * d_array_remove(struct d_array_t *arr, int pos);
 
 /**
- * Remove an item from an array's head
+ * Remove an item from an array's head and returns it
  *
  * @arr:  A struct d_array_t pointer 
  */
-void d_array_remove_head(struct d_array_t *arr);
+void * d_array_remove_head(struct d_array_t *arr);
 
 /**
- * Remove an item from an array's tail
+ * Remove an item from an array's tail and returns it
  *
  * @arr:  A struct d_array_t pointer 
- * @pos:  The position of the element to remove
  */
-void d_array_remove_tail(struct d_array_t *arr, int pos);
+void * d_array_remove_tail(struct d_array_t *arr);
 
 /**
  * Check if array needs to be resized
