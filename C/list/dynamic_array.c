@@ -26,10 +26,10 @@ void d_array_add(struct d_array_t *arr, void *item, int pos) {
 
     return;
   }
-
-  for ( int i = arr->used-1; i >= pos; i-- ) {
-    arr->data[i+1] = arr->data[i];
-  }
+  
+  memmove(&(arr->data[pos+1]), 
+          &(arr->data[pos]), 
+          (arr->used - pos)*sizeof(void *));
 
   arr->used++;
   arr->data[pos] = item;
@@ -72,9 +72,9 @@ void * d_array_remove(struct d_array_t *arr, int pos) {
 
   el = arr->data[pos];
 
-  for ( int i = pos; i <= arr->used-1; i++ ) {
-    arr->data[i] = arr->data[i+1];
-  }
+  memmove(&(arr->data[pos]), 
+          &(arr->data[pos+1]), 
+          (arr->used - pos)*sizeof(void *));
 
   arr->used--;
 
