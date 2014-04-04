@@ -46,14 +46,19 @@ void d_array_prepend(struct d_array_t *arr, void *item) {
 void d_array_check_resize(struct d_array_t *arr) {
   int size = arr->size;
 
+  if ( arr->used < INIT_SIZE/2  && arr->size != INIT_SIZE ) {
+    arr->data = (void *) realloc(arr->data, INIT_SIZE * sizeof(void *));
+    arr->size = INIT_SIZE;
+  }
+
+  if (  arr->used < INIT_SIZE )
+    return;
+
   if ( arr->used < arr->size/4 ) 
     size /= 2;
 
-  if ( arr->used == arr->size ) 
+  if ( arr->used == arr->size )
     size *= 2;
-
-  if ( arr->size == size || arr->size > INIT_SIZE )
-    return;
 
   arr->data = (void *) realloc(arr->data, size * sizeof(void *));
   arr->size = size;
