@@ -1,3 +1,4 @@
+#pragma once
 /*
  * File: dynamic_array.h
  * Author: Finnur Smári Torfason
