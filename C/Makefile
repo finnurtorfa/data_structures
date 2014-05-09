@@ -48,6 +48,7 @@ MSG_CREATING_BUILD_DIRS	= Creating build directory:
 # Lists
 C_SRC  = linked_list.c
 C_SRC += dynamic_array.c
+C_SRC += hashmap.c
 
 # Tests
 TEST_SRC = test_linked_list.c
