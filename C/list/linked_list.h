@@ -124,3 +124,4 @@ void list_remove(struct node_t *node);
   for (pos = (head)->prev, n = pos->prev; \
        pos != head;                       \
        pos = n, n = pos->prev)
+

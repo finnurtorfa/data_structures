@@ -95,3 +95,4 @@ void * d_array_remove_head(struct d_array_t *arr) {
 void * d_array_remove_tail(struct d_array_t *arr) {
   return d_array_remove(arr, arr->used);
 }
+

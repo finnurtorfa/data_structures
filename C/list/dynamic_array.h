@@ -77,3 +77,4 @@ void * d_array_remove_tail(struct d_array_t *arr);
  * @arr:  A struct d_array_t pointer 
  */
 void d_array_check_resize(struct d_array_t *arr);
+

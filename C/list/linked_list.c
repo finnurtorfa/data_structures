@@ -24,3 +24,4 @@ void list_remove(struct node_t *node) {
   node->prev = (void *)0;
   node->next = (void *)0;
 }
+
