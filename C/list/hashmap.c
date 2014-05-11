@@ -9,7 +9,8 @@
 void hashmap_init(struct hashmap_t *map) {
   map->size = 0;
   map->num_buckets = DEFAULT_NUM_BUCKETS;
-  map->buckets = (struct item_t **) malloc(sizeof(struct item_t *) * map->num_buckets);
+  map->buckets = (struct item_t **) 
+                  malloc(sizeof(struct item_t *) * map->num_buckets);
 
   for ( int i = 0; i < map->num_buckets; i ++ ) {
     LIST_NODE_INIT(&(map->buckets[i])->node);
@@ -53,3 +54,19 @@ void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len) {
   map->size++;
 }
 
+void * hashmap_get(struct hashmap_t *map, char *key) {
+  if ( key == NULL ) return NULL;
+
+  unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
+
+  struct item_t  *item = map->buckets[hash];
+
+  struct node_t *pos, *q;
+
+  for_each(pos, q, &item->node) {
+    if ( strcmp(key, item->key) == 0 ) 
+      return item->item;
+  }
+
+  return NULL;
+}

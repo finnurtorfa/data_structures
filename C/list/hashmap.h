@@ -45,6 +45,14 @@ void hashmap_init(struct hashmap_t *map);
 void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len);
 
 /**
+ * Get a value, referenced by a key
+ *
+ * @map: The hashmap whose value to return
+ * @key: The key to search for
+ */
+void * hashmap_get(struct hashmap_t *map, char *key);
+
+/**
  * A hashing function by Daniel J. Bernstein. A 'times 33' function with 
  * addition. It basically uses a function like
  *
