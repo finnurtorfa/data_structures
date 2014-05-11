@@ -7,6 +7,8 @@
  * A basic implementation of a hashmap
  */
 
+#include <string.h>
+
 #include "linked_list.h"
 #include "dynamic_array.h"
 
@@ -30,4 +32,34 @@ struct hashmap_t {
  *
  * @map: A hashmap
  */
-void init_hashmap(struct hashmap_t *map);
+void hashmap_init(struct hashmap_t *map);
+
+/**
+ * Insert key/value pair to the hashmap
+ *
+ * @map: The hashmap to which the key/value pair will be inserted
+ * @key: A key which can be mapped to a value
+ * @val: The value to which the key is mapped to
+ * @len: The length of the value in bytes.
+ */
+void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len);
+
+/**
+ * A hashing function by Daniel J. Bernstein. A 'times 33' function with 
+ * addition. It basically uses a function like
+ *
+ * hash(i) = hash(i-1)*33 + key[i]
+ *
+ * The function is not meant to be called directly
+ *
+ * @key: The key to hash
+ */
+static inline unsigned long __djb_hash(unsigned char *key) {
+  unsigned long hash = 5381;
+  int c;
+
+  while ( (c = *key++) ) 
+    hash = ((hash << 5) + hash) + c;
+
+  return hash;
+}
