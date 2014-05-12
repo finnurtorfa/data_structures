@@ -16,7 +16,7 @@ void hashmap_init(struct hashmap_t *map) {
     LIST_NODE_INIT(&(map->buckets[i])->node);
   }
 
-  d_array_init(&map->items);
+  d_array_init(&map->keys);
 }
 
 void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len) {
@@ -32,10 +32,10 @@ void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len) {
     /* If key already exists */
     if ( strcmp(key, item->key) == 0 ) {
       /* Free the value if it is already taken */
-      if ( item->item != NULL ) free(item->item);
+      if ( item->value != NULL ) free(item->value);
 
-      item->item = malloc(len);
-      memcpy(item->item, val, len);
+      item->value = malloc(len);
+      memcpy(item->value, val, len);
 
       return;
     }
@@ -43,13 +43,13 @@ void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len) {
 
   tmp = (struct item_t *)malloc(sizeof(struct item_t));
   tmp->key = malloc(keylen + 1);
-  tmp->item = malloc(len);
+  tmp->value = malloc(len);
 
   memcpy(tmp->key, key, keylen + 1);
-  memcpy(tmp->item, val, len);
+  memcpy(tmp->value, val, len);
 
   list_append(&(tmp->node), &(map->buckets[hash]->node));
-  d_array_append(&map->items, (char *)tmp->key);
+  d_array_append(&map->keys, (char *)tmp->key);
 
   map->size++;
 }
@@ -59,14 +59,46 @@ void * hashmap_get(struct hashmap_t *map, char *key) {
 
   unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
 
-  struct item_t  *item = map->buckets[hash];
+  struct item_t *item = map->buckets[hash];
 
   struct node_t *pos, *q;
 
   for_each(pos, q, &item->node) {
     if ( strcmp(key, item->key) == 0 ) 
-      return item->item;
+      return item->value;
   }
 
   return NULL;
 }
+
+void hashmap_remove(struct hashmap_t *map, char *key) {
+  unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
+  char *tmp_key;
+
+  struct item_t *item = map->buckets[hash];
+  struct item_t *tmp;
+
+  struct node_t *pos, *q;
+
+  for_each(pos, q, &item->node) {
+    if ( strcmp(key, item->key) == 0 ) {
+      tmp = get_list_node(pos, struct item_t, node);
+      list_remove(pos);
+      
+      for ( int i = 0; i < map->keys.used; i++ ) {
+        if ( strcmp(key, (char *)&(map->keys).data[i]) ) {
+          tmp_key = (char *)d_array_remove(&map->keys, i);
+          break;
+        }
+      }
+
+      free(tmp_key);
+      free(tmp->key);
+      free(tmp->value);
+      free(tmp);
+
+      map->size--;
+    }
+  }
+}
+

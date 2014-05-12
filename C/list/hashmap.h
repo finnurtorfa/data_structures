@@ -16,13 +16,13 @@
 
 struct item_t {
   char *key;
-  void *item;
+  void *value;
   struct node_t node;
 };
 
 struct hashmap_t {
   struct item_t **buckets;
-  struct d_array_t items;
+  struct d_array_t keys;
   int size;
   int num_buckets;
 };
@@ -53,6 +53,14 @@ void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len);
 void * hashmap_get(struct hashmap_t *map, char *key);
 
 /**
+ * Remove item from the list 
+ *
+ * @map: A hashmap to remove an item from
+ * @key: The key pointing to the item to remove
+ */
+void hashmap_remove(struct hashmap_t *map, char *key);
+
+/**
  * A hashing function by Daniel J. Bernstein. A 'times 33' function with 
  * addition. It basically uses a function like
  *
@@ -71,3 +79,4 @@ static inline unsigned long __djb_hash(unsigned char *key) {
 
   return hash;
 }
+
