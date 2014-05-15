@@ -61,6 +61,13 @@ void * hashmap_get(struct hashmap_t *map, char *key);
 void hashmap_remove(struct hashmap_t *map, char *key);
 
 /**
+ * Delete a hashmap
+ *
+ * @map: The hashmap to delete
+ */
+void hashmap_delete(struct hashmap_t *map);
+
+/**
  * A hashing function by Daniel J. Bernstein. A 'times 33' function with 
  * addition. It basically uses a function like
  *

@@ -102,3 +102,30 @@ void hashmap_remove(struct hashmap_t *map, char *key) {
   }
 }
 
+void hashmap_delete(struct hashmap_t *map) {
+  struct item_t *item, *tmp;
+  struct node_t *pos, *q;
+  char *tmp_key;
+
+  for ( int i = 0; i < map->num_buckets; i++ ) {
+    item = map->buckets[i];
+
+    for_each(pos, q, &item->node) {
+      tmp = get_list_node(pos, struct item_t, node);
+      list_remove(pos);
+
+      free(tmp->key);
+      free(tmp->value);
+      free(tmp);
+    }
+
+    tmp_key = (char *)d_array_remove(&map->keys, i);
+
+    free(tmp_key);
+  }
+
+  free(&map->keys);
+  free(&map->buckets);
+  free(map);
+}
+
