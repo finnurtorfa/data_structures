@@ -12,7 +12,7 @@ void hashmap_init(struct hashmap_t *map) {
   map->buckets = (struct item_t **) 
                   malloc(sizeof(struct item_t *) * map->num_buckets);
 
-  for ( int i = 0; i < map->num_buckets; i ++ ) {
+  for ( int i = 0; i < map->num_buckets; i++ ) {
     LIST_NODE_INIT(&(map->buckets[i])->node);
   }
 
@@ -127,5 +127,39 @@ void hashmap_delete(struct hashmap_t *map) {
   free(&map->keys);
   free(&map->buckets);
   free(map);
+}
+
+void hashmap_resize(struct hashmap_t *map, int num_buckets) {
+  map->buckets = (struct item_t **) 
+                  malloc(sizeof(struct item_t *) * map->num_buckets);
+
+  if ( num_buckets > map->num_buckets )
+    for ( int i = map->num_buckets; i < num_buckets; i++ ) {
+      LIST_NODE_INIT(&(map->buckets[i])->node);
+    }
+
+  for (int i = 0; i < map->size; i++ ) {
+    char * key = (char *)&(map->keys).data[i];
+    unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
+    
+    struct item_t *item = map->buckets[hash];
+    struct item_t *tmp;
+    struct node_t *pos, *q;
+
+    for_each(pos, q, &item->node) {
+      if ( strcmp(item->key, key) == 0 ) {
+        tmp = get_list_node(pos, struct item_t, node);
+        list_remove(pos);
+
+        break;
+      }
+    }
+
+    hash = __djb_hash((unsigned char *)key) % num_buckets;
+
+    list_append(&(tmp->node), &(map->buckets[hash]->node));
+  }
+
+  map->num_buckets = num_buckets;
 }
 

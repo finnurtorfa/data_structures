@@ -68,6 +68,14 @@ void hashmap_remove(struct hashmap_t *map, char *key);
 void hashmap_delete(struct hashmap_t *map);
 
 /**
+ * Resize a hashmap
+ *
+ * @map:          The hashmap to resize
+ * @num_buckets:  The number of buckets in the resized hashmap
+ */
+void hashmap_resize(struct hashmap_t *map, int num_buckets);
+
+/**
  * A hashing function by Daniel J. Bernstein. A 'times 33' function with 
  * addition. It basically uses a function like
  *
