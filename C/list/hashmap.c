@@ -84,8 +84,9 @@ void hashmap_remove(struct hashmap_t *map, char *key) {
   struct node_t *pos, *q;
 
   for_each(pos, q, &item->node) {
-    if ( strcmp(key, item->key) == 0 ) {
-      tmp = get_list_node(pos, struct item_t, node);
+    tmp = get_list_node(pos, struct item_t, node);
+
+    if ( strcmp(key, tmp->key) == 0 ) {
       list_remove(pos);
       
       for ( int i = 0; i < map->keys.used; i++ ) {
@@ -96,7 +97,6 @@ void hashmap_remove(struct hashmap_t *map, char *key) {
       }
 
       free(tmp_key);
-      free(tmp->key);
       free(tmp->value);
       free(tmp);
 
@@ -134,15 +134,19 @@ void hashmap_delete(struct hashmap_t *map) {
 
 void hashmap_resize(struct hashmap_t *map, int num_buckets) {
   map->buckets = (struct item_t **) 
-                  malloc(sizeof(struct item_t *) * map->num_buckets);
+                  realloc(map->buckets, 
+                          sizeof(struct item_t *) * num_buckets);
 
   if ( num_buckets > map->num_buckets )
     for ( int i = map->num_buckets; i < num_buckets; i++ ) {
-      LIST_NODE_INIT(&(map->buckets[i])->node);
+      struct item_t *tmp = (struct item_t *)malloc(sizeof(struct item_t));
+
+      LIST_NODE_INIT(&tmp->node);
+      map->buckets[i] = tmp;
     }
 
   for (int i = 0; i < map->size; i++ ) {
-    char * key = (char *)&(map->keys).data[i];
+    char * key = (char *)map->keys.data[i];
     unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
     
     struct item_t *item = map->buckets[hash];
@@ -150,8 +154,9 @@ void hashmap_resize(struct hashmap_t *map, int num_buckets) {
     struct node_t *pos, *q;
 
     for_each(pos, q, &item->node) {
-      if ( strcmp(item->key, key) == 0 ) {
-        tmp = get_list_node(pos, struct item_t, node);
+      tmp = get_list_node(pos, struct item_t, node);
+      
+      if ( strcmp(tmp->key, key) == 0 ) {
         list_remove(pos);
 
         break;
