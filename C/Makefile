@@ -53,6 +53,7 @@ C_SRC += hashmap.c
 # Tests
 TEST_SRC = test_linked_list.c
 TEST_SRC += test_dynamic_array.c
+TEST_SRC += test_hashmap.c
 
 ### Set source lookup paths
 ################################################
@@ -143,6 +144,9 @@ test%.out: $(TEST_OBJ)
 	@echo
 	@echo $(MSG_LINKING) $@
 	$(CC) $(C_FLAGS) $(C_OBJ) $(OBJ_DIR)/$(@:.out=.o) $(LD_FLAGS) -o $(OUTPUT_DIR)/$@
+
+debug: C_FLAGS += -g
+debug: test
 
 # Target: clean project.
 clean: begin clean_list end
