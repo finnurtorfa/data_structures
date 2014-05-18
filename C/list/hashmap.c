@@ -33,12 +33,10 @@ void hashmap_insert(struct hashmap_t *map, char *key, void *val , size_t len) {
 
   for_each(pos, q, &item->node) {
     /* If key already exists */
-    if ( strcmp(key, item->key) == 0 ) {
-      /* Free the value if it is already taken */
-      if ( item->value != NULL ) free(item->value);
-
-      item->value = malloc(len);
-      memcpy(item->value, val, len);
+    tmp = get_list_node(pos, struct item_t, node);
+    if ( strcmp(key, tmp->key) == 0 ) {
+      tmp->value = realloc(tmp->value, len);
+      memcpy(tmp->value, val, len);
 
       return;
     }
