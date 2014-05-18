@@ -61,12 +61,14 @@ void * hashmap_get(struct hashmap_t *map, char *key) {
   unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
 
   struct item_t *item = map->buckets[hash];
+  struct item_t *tmp;
 
   struct node_t *pos, *q;
 
   for_each(pos, q, &item->node) {
-    if ( strcmp(key, item->key) == 0 ) 
-      return item->value;
+    tmp = get_list_node(pos, struct item_t, node);
+    if ( strcmp(key, tmp->key) == 0 ) 
+      return tmp->value;
   }
 
   return NULL;
