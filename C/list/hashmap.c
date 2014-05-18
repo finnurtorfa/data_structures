@@ -13,7 +13,10 @@ void hashmap_init(struct hashmap_t *map) {
                   malloc(sizeof(struct item_t *) * map->num_buckets);
 
   for ( int i = 0; i < map->num_buckets; i++ ) {
-    LIST_NODE_INIT(&(map->buckets[i])->node);
+    struct item_t *tmp = (struct item_t *)malloc(sizeof(struct item_t));
+
+    LIST_NODE_INIT(&tmp->node);
+    map->buckets[i] = tmp;
   }
 
   d_array_init(&map->keys);
