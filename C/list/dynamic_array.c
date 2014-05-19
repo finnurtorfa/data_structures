@@ -47,7 +47,15 @@ void d_array_check_resize(struct d_array_t *arr) {
   int size = arr->size;
 
   if ( arr->used < INIT_SIZE/2  && arr->size != INIT_SIZE ) {
-    arr->data = (void *) realloc(arr->data, INIT_SIZE * sizeof(void *));
+    void *tmp = (void *) realloc(arr->data, INIT_SIZE * sizeof(void *));
+
+    if ( !tmp ) {
+      printf("Reallocation of memory failed!\n");
+      free(arr->data);
+      exit(-1);
+    }
+    
+    arr->data = tmp;
     arr->size = INIT_SIZE;
   }
 
@@ -60,7 +68,18 @@ void d_array_check_resize(struct d_array_t *arr) {
   if ( arr->used == arr->size )
     size *= 2;
 
-  arr->data = (void *) realloc(arr->data, size * sizeof(void *));
+  if ( arr->size == size ) 
+    return;
+
+  void *tmp = (void *) realloc(arr->data, size * sizeof(void *));
+
+  if ( !tmp ) {
+    printf("Reallocation of memory failed!\n");
+    free(arr->data);
+    exit(-1);
+  }
+  
+  arr->data = tmp;
   arr->size = size;
 }
 
