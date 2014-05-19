@@ -58,6 +58,8 @@ int main(int argc, char **argv) {
   printf("Size: %d\n", array.size);
   printf("used: %d\n", array.used);
 
+  free(array.data);
+
   return 0;
 }
 
