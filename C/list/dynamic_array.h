@@ -7,6 +7,7 @@
  * A basic implementation of a dynamic array
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #define INIT_SIZE 100
