@@ -9,3 +9,25 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "linked_list.h"
+
+struct queue_t {
+  void *data;
+  struct node_t node;
+};
+
+/**
+ * Initialize the queue
+ *
+ * @q: A queue to initialize
+ */
+void queue_init(struct queue_t *q);
+
+/**
+ * Add data to the back of the queue
+ *
+ * @q: A queue to add the data to
+ * @data: The data to add
+ */
+void queue_enqueue(struct queue_t *q, void *data);
+
