@@ -31,3 +31,9 @@ void queue_init(struct queue_t *q);
  */
 void queue_enqueue(struct queue_t *q, void *data);
 
+/**
+ * Remove and return data from the front of the queue
+ *
+ * @q; A queue to remove data from
+ */
+void * queue_dequeue(struct queue_t *q);
