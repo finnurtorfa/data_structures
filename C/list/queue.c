@@ -19,16 +19,20 @@ void queue_enqueue(struct queue_t *q, void *data) {
   list_prepend(&(tmp->node), &(q->node));
 }
 
-void * queue_dequeue(struct queue_t *q) {
+void queue_dequeue(struct queue_t *q) {
   struct queue_t *tmp;
-  void * ret_val;
 
   tmp = get_list_node(q->node.next, struct queue_t, node);
-  ret_val = tmp->data;
 
   list_remove(q->node.next);
   free(tmp);
+}
 
-  return ret_val;
+void * queue_peek(struct queue_t *q) {
+  struct queue_t *tmp;
+
+  tmp = get_list_node(q->node.next, struct queue_t, node);
+
+  return tmp->data;
 }
 

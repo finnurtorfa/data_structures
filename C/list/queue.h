@@ -32,8 +32,16 @@ void queue_init(struct queue_t *q);
 void queue_enqueue(struct queue_t *q, void *data);
 
 /**
- * Remove and return data from the front of the queue
+ * Remove data from the front of the queue
  *
  * @q; A queue to remove data from
  */
-void * queue_dequeue(struct queue_t *q);
+void queue_dequeue(struct queue_t *q);
+
+/**
+ * Return the first element in the queue, without removing it
+ *
+ * @q: The queue to peek at
+ */
+void * queue_peek(struct queue_t *q);
+
