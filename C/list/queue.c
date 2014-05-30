@@ -16,7 +16,7 @@ void queue_enqueue(struct queue_t *q, void *data) {
 
   tmp->data = data;
 
-  list_append(&(tmp->node), &(q->node));
+  list_prepend(&(tmp->node), &(q->node));
 }
 
 void * queue_dequeue(struct queue_t *q) {
