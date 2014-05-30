@@ -52,9 +52,10 @@ C_SRC += hashmap.c
 C_SRC += queue.c
 
 # Tests
-TEST_SRC = test_linked_list.c
+TEST_SRC =  test_linked_list.c
 TEST_SRC += test_dynamic_array.c
 TEST_SRC += test_hashmap.c
+TEST_SRC += test_queue.c
 
 ### Set source lookup paths
 ################################################
