@@ -7,6 +7,7 @@
  * A basic implementation of a queue
  */
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "linked_list.h"
@@ -44,4 +45,11 @@ void queue_dequeue(struct queue_t *q);
  * @q: The queue to peek at
  */
 void * queue_peek(struct queue_t *q);
+
+/**
+ * Returns wether or not the queue is empty
+ *
+ * @q: The queue to test
+ */
+bool queue_is_empty(struct queue_t *q);
 

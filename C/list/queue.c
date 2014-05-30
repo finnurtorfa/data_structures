@@ -22,6 +22,10 @@ void queue_enqueue(struct queue_t *q, void *data) {
 void queue_dequeue(struct queue_t *q) {
   struct queue_t *tmp;
 
+  if ( queue_is_empty(q) ) {
+    return;
+  }
+
   tmp = get_list_node(q->node.next, struct queue_t, node);
 
   list_remove(q->node.next);
@@ -31,8 +35,16 @@ void queue_dequeue(struct queue_t *q) {
 void * queue_peek(struct queue_t *q) {
   struct queue_t *tmp;
 
+  if ( queue_is_empty(q) ) {
+    return NULL;
+  }
+
   tmp = get_list_node(q->node.next, struct queue_t, node);
 
   return tmp->data;
+}
+
+bool queue_is_empty(struct queue_t *q) {
+  return q == get_list_node(q->node.next, struct queue_t, node);
 }
 
