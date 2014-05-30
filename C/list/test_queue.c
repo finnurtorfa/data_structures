@@ -33,6 +33,11 @@ int main(int argc, char **argv) {
   queue_dequeue(&my_queue);
   printf("Dequeue-ing!\n"); 
 
+  a = (int *)queue_peek(&my_queue);
+  printf("Taking a head at the front of the queue: %d\n", (int)a);
+
+  queue_dequeue(&my_queue);
+
   printf("Done!\n");
 
   return 0;
