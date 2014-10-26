@@ -80,10 +80,9 @@ C_FLAGS += -Wall
 C_FLAGS += -Wextra
 C_FLAGS += -Winit-self
 C_FLAGS += -Wstrict-prototypes
-C_FLAGS += -Wl,-z,now 
 C_FLAGS += -Wformat-security
 C_FLAGS += -fno-exceptions
-C_FLAGS += -fstack-protector -Wl,-z,relro 
+C_FLAGS += -fstack-protector
 C_FLAGS += -Wno-unused 
 C_FLAGS += -Wno-unused-parameter 
 C_FLAGS += -Wno-unused-function 
@@ -112,6 +111,8 @@ LD_FLAGS += -Wl,-O1
 LD_FLAGS += -Wl,--discard-all
 LD_FLAGS += -Wl,--no-undefined
 LD_FLAGS += -Wl,--build-id=sha1
+LD_FLAGS += -Wl,-z,now 
+LD_FLAGS += -Wl,-z,relro 
 LD_FLAGS += -rdynamic
 
 ### Rules
