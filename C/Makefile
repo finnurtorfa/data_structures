@@ -129,7 +129,13 @@ LD_FLAGS += -rdynamic
 # Default rule target
 .PHONY: all
 .PRECIOUS : $(C_OBJ)
+all: CC = gcc
 all: begin version $(BUILD_DIRS) $(C_OBJ) end
+
+.PHONY: clang
+.PRECIOUS : $(C_OBJ)
+clang: CC = clang
+clang: begin version $(BUILD_DIRS) $(C_OBJ) end
 
 # Compile: create object files from C source files.
 $(OBJ_DIR)/%.o : %.c
@@ -143,7 +149,11 @@ $(BUILD_DIRS) :
 	@echo $(MSG_CREATING_BUILD_DIRS)
 	- $(MK) $@
 
+test: CC = gcc
 test: begin version $(BUILD_DIRS) $(C_OBJ) $(TEST_OUTPUT) end
+
+test_clang: CC = clang
+test_clang: begin version $(BUILD_DIRS) $(C_OBJ) $(TEST_OUTPUT) end
 
 test%.out: $(TEST_OBJ)
 	@echo
