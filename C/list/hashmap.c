@@ -105,7 +105,6 @@ void hashmap_remove(struct hashmap_t *map, char *key) {
 void hashmap_delete(struct hashmap_t *map) {
   struct item_t *item, *tmp;
   struct node_t *pos, *q;
-  char *tmp_key;
 
   for ( int i = 0; i < map->size; i++ ) {
     int hash = __djb_hash((unsigned char *)map->keys.data[0]) % map->num_buckets;
@@ -120,7 +119,7 @@ void hashmap_delete(struct hashmap_t *map) {
       free(tmp);
     }
 
-    tmp_key = (char *)d_array_remove_head(&map->keys);
+    (char *)d_array_remove_head(&map->keys);
   }
 
   for ( int i = 0; i < map->num_buckets; i++ ) {
