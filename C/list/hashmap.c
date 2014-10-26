@@ -151,7 +151,7 @@ void hashmap_resize(struct hashmap_t *map, int num_buckets) {
     unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
     
     struct item_t *item = map->buckets[hash];
-    struct item_t *tmp;
+    struct item_t *tmp = 0;
     struct node_t *pos, *q;
 
     for_each(pos, q, &item->node) {
