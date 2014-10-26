@@ -76,8 +76,6 @@ void * hashmap_get(struct hashmap_t *map, char *key) {
 
 void hashmap_remove(struct hashmap_t *map, char *key) {
   unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
-  char *tmp_key;
-
   struct item_t *item = map->buckets[hash];
   struct item_t *tmp;
 
@@ -91,12 +89,11 @@ void hashmap_remove(struct hashmap_t *map, char *key) {
       
       for ( int i = 0; i < map->keys.used; i++ ) {
         if ( strcmp(key, (char *)&(map->keys).data[i]) ) {
-          tmp_key = (char *)d_array_remove(&map->keys, i);
+          free((char *)d_array_remove(&map->keys, i));
           break;
         }
       }
 
-      free(tmp_key);
       free(tmp->value);
       free(tmp);
 
