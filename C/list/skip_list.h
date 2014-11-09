@@ -22,3 +22,5 @@ struct skip_list_t {
   struct skip_node_t *bottom;
   int height;
 };
+
+int rand_height(int max);
