@@ -59,6 +59,7 @@ TEST_SRC += test_dynamic_array.c
 TEST_SRC += test_hashmap.c
 TEST_SRC += test_queue.c
 TEST_SRC += test_deque.c
+TEST_SRC += test_skip_list.c
 
 ### Set source lookup paths
 ################################################
