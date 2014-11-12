@@ -40,3 +40,9 @@ int rand_height(int max);
  * @skip: The skip list to initialize
  */
 void init_skip_list(struct skip_list_t *skip);
+
+/**
+ * Insert a new value into the skip list
+ */
+int skip_insert(struct skip_list_t *skip, void *value);
+

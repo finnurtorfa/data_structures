@@ -53,3 +53,21 @@ void init_skip_list(struct skip_list_t *skip) {
   init_list_node(&skip->bottom->node_horiz);
 }
 
+int skip_insert(struct skip_list_t *skip, void *value) {
+  struct skip_node_t *it, *save = NULL;
+  int max;
+
+  if ( skip->length > ( 1 << skip->height ) ) {
+    max = skip->height + 2;
+  } else {
+    max = skip->height + 1;
+  }
+
+  int h = rand_height(max);
+  if ( h > skip->height ) {
+    skip->height = h;
+  }
+
+  return 1;
+}
+
