@@ -12,12 +12,6 @@
 
 static int seed_set = 0;
 
-/**
- * Returns a random number in the range [0, max)
- *
- * @max: An integer representing the maximum value of the random number
- *       generator.
- */
 int rand_height(int max) {
   if ( !seed_set ) {
     seed_set = 1;
@@ -45,3 +39,17 @@ int rand_height(int max) {
 
   return h;
 }
+
+void init_skip_list(struct skip_list_t *skip) {
+  skip->height = 1;
+  skip->length = 0;
+
+  skip->head = (struct skip_node_t *)malloc(sizeof(struct skip_node_t *));
+  skip->bottom = (struct skip_node_t *)malloc(sizeof(struct skip_node_t *));
+
+  init_list_node(&skip->head->node_vert);
+  init_list_node(&skip->head->node_horiz);
+  init_list_node(&skip->bottom->node_vert);
+  init_list_node(&skip->bottom->node_horiz);
+}
+

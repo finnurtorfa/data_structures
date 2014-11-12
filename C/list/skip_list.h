@@ -21,6 +21,22 @@ struct skip_list_t {
   struct skip_node_t *head;
   struct skip_node_t *bottom;
   int height;
+  int length;
+
 };
 
+/**
+ * Returns a random number in the range [1, max). The value returned is a
+ * weighted random number with a probability of 1/2.
+ *
+ * @max: An integer representing the maximum value of the random number
+ *       generator.
+ */
 int rand_height(int max);
+
+/** 
+ * Initialize the skip list
+ *
+ * @skip: The skip list to initialize
+ */
+void init_skip_list(struct skip_list_t *skip);
