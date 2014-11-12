@@ -5,9 +5,13 @@
 
 int main(int argc, char **argv) {
   printf("Starting!\n");
+  struct skip_list_t *skip = (struct skip_list_t *)malloc(sizeof(struct skip_list_t));
+  init_skip_list(skip);
+
   for ( int i = 0; i < 1000; i++) {
-    int num = rand_height(16);
-    printf("%d\n", num);
+    skip->length++;
+    skip_insert(skip, (void *)i);
+    printf("height: %d\n", skip->height);
   }
 }
 
