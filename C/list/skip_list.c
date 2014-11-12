@@ -49,8 +49,8 @@ void init_skip_list(struct skip_list_t *skip) {
 
   init_list_node(&skip->head->node_vert);
   init_list_node(&skip->head->node_horiz);
-  init_list_node(&skip->bottom->node_vert);
-  init_list_node(&skip->bottom->node_horiz);
+
+  skip->bottom = skip->head;
 }
 
 int skip_insert(struct skip_list_t *skip, void *value) {
@@ -64,6 +64,7 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   }
 
   int h = rand_height(max);
+
   if ( h > skip->height ) {
     skip->height = h;
   }
