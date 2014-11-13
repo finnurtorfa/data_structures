@@ -11,6 +11,9 @@
 
 #include "linked_list.h"
 
+#define BYTE_LEN 8
+#define MAX_HEIGHT 24
+
 struct skip_node_t {
   struct node_t node_vert;
   struct node_t node_horiz;

@@ -8,8 +8,6 @@
 
 #include "skip_list.h"
 
-#define BYTE_LEN 8
-
 static int seed_set = 0;
 
 int rand_height(int max) {
@@ -55,18 +53,11 @@ void init_skip_list(struct skip_list_t *skip) {
 
 int skip_insert(struct skip_list_t *skip, void *value) {
   struct skip_node_t *it, *save = NULL;
-  int max;
 
-  if ( skip->length > ( 1 << skip->height ) ) {
-    max = skip->height + 2;
-  } else {
-    max = skip->height + 1;
-  }
-
-  int h = rand_height(max);
+  int h = rand_height(MAX_HEIGHT);
 
   if ( h > skip->height ) {
-    skip->height = h;
+    skip->height++;
   }
 
   return 1;
