@@ -25,7 +25,6 @@ struct skip_list_t {
   struct skip_node_t *bottom;
   int height;
   int length;
-
 };
 
 /**
@@ -49,3 +48,7 @@ void init_skip_list(struct skip_list_t *skip);
  */
 int skip_insert(struct skip_list_t *skip, void *value);
 
+/**
+ * Create a new node in the skip list
+ */
+struct skip_node_t * new_node(struct skip_node_t *prev, void *data);

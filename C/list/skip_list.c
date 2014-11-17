@@ -57,9 +57,26 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   int h = rand_height(MAX_HEIGHT);
 
   if ( h > skip->height ) {
+    skip->head = new_node(skip->head, NULL);
     skip->height++;
   }
 
   return 1;
 }
 
+struct skip_node_t * new_node(struct skip_node_t *prev, void *data) {
+  struct skip_node_t *node = (struct skip_node_t *)
+    malloc(sizeof(struct skip_node_t *));
+
+  init_list_node(&(node->node_vert));
+  init_list_node(&(node->node_horiz));
+
+  list_append(&(prev->node_vert), &(node->node_vert));
+
+  if ( data != NULL ) {
+    list_append(&(prev->node_horiz), &(node->node_horiz));
+    node->data = data;
+  }
+
+  return node;
+}
