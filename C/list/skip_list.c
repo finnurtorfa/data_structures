@@ -42,8 +42,8 @@ void init_skip_list(struct skip_list_t *skip) {
   skip->height = 1;
   skip->length = 0;
 
-  skip->head = (struct skip_node_t *)malloc(sizeof(struct skip_node_t *));
-  skip->bottom = (struct skip_node_t *)malloc(sizeof(struct skip_node_t *));
+  skip->head = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
+  skip->bottom = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
 
   init_list_node(&skip->head->node_vert);
   init_list_node(&skip->head->node_horiz);
