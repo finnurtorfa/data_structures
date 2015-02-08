@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "queue.h"
@@ -16,25 +17,25 @@ int main(int argc, char **argv) {
   queue_enqueue(&my_queue, (void *)3);
 
   int *a = (int *)queue_peek(&my_queue);
-  printf("Taking a head at the front of the queue: %d\n", (int)a);
+  printf("Taking a head at the front of the queue: %d\n", (int)(intptr_t)a);
 
   queue_dequeue(&my_queue);
   printf("Dequeue-ing!\n"); 
 
   a = (int *)queue_peek(&my_queue);
-  printf("Taking a head at the front of the queue: %d\n", (int)a);
+  printf("Taking a head at the front of the queue: %d\n", (int)(intptr_t)a);
 
   queue_dequeue(&my_queue);
   printf("Dequeue-ing!\n"); 
 
   a = (int *)queue_peek(&my_queue);
-  printf("Taking a head at the front of the queue: %d\n", (int)a);
+  printf("Taking a head at the front of the queue: %d\n", (int)(intptr_t)a);
 
   queue_dequeue(&my_queue);
   printf("Dequeue-ing!\n"); 
 
   a = (int *)queue_peek(&my_queue);
-  printf("Taking a head at the front of the queue: %d\n", (int)a);
+  printf("Taking a head at the front of the queue: %d\n", (int)(intptr_t)a);
 
   queue_dequeue(&my_queue);
 
