@@ -17,12 +17,12 @@
 struct skip_node_t {
   struct node_t node_vert;
   struct node_t node_horiz;
+  int level;
   void *data;
 };
 
 struct skip_list_t {
   struct skip_node_t *head;
-  struct skip_node_t *bottom;
   int height;
   int length;
 };

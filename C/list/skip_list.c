@@ -39,16 +39,22 @@ int rand_height(int max) {
 }
 
 void init_skip_list(struct skip_list_t *skip) {
+  struct skip_node_t *tmp;
+
   skip->height = 1;
   skip->length = 0;
 
   skip->head = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
-  skip->bottom = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
 
   init_list_node(&skip->head->node_vert);
   init_list_node(&skip->head->node_horiz);
 
-  skip->bottom = skip->head;
+  tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
+  tmp->data = NULL;
+  tmp->level = 1;
+
+  list_append(&(tmp->node_vert), &(skip->head->node_vert));
+  list_append(&(tmp->node_horiz), &(skip->head->node_horiz));
 }
 
 int skip_insert(struct skip_list_t *skip, void *value) {
