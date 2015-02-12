@@ -15,10 +15,10 @@
 #define MAX_HEIGHT 24
 
 struct skip_node_t {
-  struct node_t node_vert;
-  struct node_t node_horiz;
   int level;
   void *data;
+  struct node_t node_v;
+  struct node_t node_h;
 };
 
 struct skip_list_t {
