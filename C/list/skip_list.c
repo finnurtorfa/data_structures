@@ -60,7 +60,7 @@ void init_skip_list(struct skip_list_t *skip) {
 }
 
 int skip_insert(struct skip_list_t *skip, void *value) {
-  struct skip_node_t *tmp, *head;
+  struct skip_node_t *tmp, *head, *save = NULL;
   struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
   struct node_t *pos_v, *q_v, *pos_h, *q_h;
 
@@ -110,6 +110,20 @@ int skip_insert(struct skip_list_t *skip, void *value) {
       } else {
         list_append(&tmp->node_h, &tmp_h->node_h);
       }
+    }
+
+    if ( !tmp_h ) {
+      tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
+      tmp->level = 1;
+      tmp->data = value;
+
+      init_list_node(&tmp->node_v);
+      list_append(&tmp->node_h, &head->node_h);
+
+      if ( save ) {
+        list_append(&save->node_v, &tmp->node_v);
+      }
+      save = tmp;
     }
   }
 
