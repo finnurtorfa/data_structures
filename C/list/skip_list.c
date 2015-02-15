@@ -45,11 +45,18 @@ void init_skip_list(struct skip_list_t *skip) {
   skip->length = 0;
 
   skip->head = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
-  skip->head->level = 1;
+  skip->head->level = 0;
   skip->head->data = NULL;
 
   init_list_node(&skip->head->node_v);
   init_list_node(&skip->head->node_h);
+
+  tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
+  tmp->data = NULL;
+  tmp->level = 1;
+
+  list_append(&(tmp->node_v), &(skip->head->node_v));
+  init_list_node(&(tmp->node_h));
 }
 
 int skip_insert(struct skip_list_t *skip, void *value) {
