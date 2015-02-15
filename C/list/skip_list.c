@@ -64,7 +64,6 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
   struct node_t *pos_v, *q_v, *pos_h, *q_h;
 
-  int insert = 0;
   int h = rand_height(MAX_HEIGHT);
 
   if ( h > skip->height ) {
@@ -88,27 +87,25 @@ int skip_insert(struct skip_list_t *skip, void *value) {
       for_each_reverse(pos_h, q_h, &tmp_v->node_h) {
         tmp_h = get_list_node(pos_h, struct skip_node_t, node_h);
 
-        if ( tmp_h->data == NULL || value > tmp_h->data ) {
-          continue;
+        if ( value < tmp_h->data || &tmp_v->node_h == pos_h->prev) {
+
+          tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
+          tmp->level = tmp_h->level;
+          tmp->data = value;
+
+          init_list_node(&tmp->node_v);
+          list_prepend(&tmp->node_h, &tmp_h->node_h);
+
+          if ( save ) {
+            list_append(&save->node_v, &tmp->node_v);
+          }
+
+          if ( tmp_h->level == 1 ) {
+            break;
+          }
+
+          save = tmp;
         }
-
-        insert = 1;
-
-        break;
-      }
-
-      tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
-      tmp->level = tmp_v->level;
-      tmp->data = value;
-
-      init_list_node(&tmp->node_v);
-
-      if ( !insert && tmp_v->level == 1 ) {
-        list_append(&tmp->node_h, &head->node_h);
-      } else if ( !insert ) {
-        list_append(&tmp->node_h, &tmp_v->node_h);
-      } else {
-        list_append(&tmp->node_h, &tmp_h->node_h);
       }
     }
 
@@ -118,11 +115,12 @@ int skip_insert(struct skip_list_t *skip, void *value) {
       tmp->data = value;
 
       init_list_node(&tmp->node_v);
-      list_append(&tmp->node_h, &head->node_h);
+      list_append(&tmp->node_h, &tmp_v->node_h);
 
       if ( save ) {
         list_append(&save->node_v, &tmp->node_v);
       }
+
       save = tmp;
     }
   }
