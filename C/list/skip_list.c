@@ -113,32 +113,6 @@ int skip_insert(struct skip_list_t *skip, void *value) {
     }
   }
 
-  insert = 0;
-
-  for_each_reverse(pos_h, q_h, &head->node_h) { // For the 1. level
-    tmp_h = get_list_node(pos_h, struct skip_node_t, node_h);
-
-    if ( tmp_h->data == NULL || value > tmp_h->data ) {
-      continue;
-    }
-
-    insert = 1;
-
-    break;
-  }
-
-  tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
-  tmp->level = 1;
-  tmp->data = value;
-
-  init_list_node(&tmp->node_v);
-
-  if ( !insert ) { // New node is placed at the end of the list
-    list_append(&tmp->node_h, &head->node_h);
-  } else { // Insert the new node at the current position.
-    list_append(&tmp->node_h, &tmp_h->node_h);
-  }
-
   return 1;
 }
 
