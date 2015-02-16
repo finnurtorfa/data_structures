@@ -8,10 +8,13 @@ int main(int argc, char **argv) {
   struct skip_list_t *skip = (struct skip_list_t *)malloc(sizeof(struct skip_list_t));
   init_skip_list(skip);
 
-  for ( int i = 0; i < 1000; i++) {
-    skip->length++;
+  for ( int i = 0; i < 1000; i=i+2 ) {
     skip_insert(skip, (void *)i);
-    printf("height: %d\n", skip->height);
+    printf("Inserting: %d\n", i);
+  }
+  for ( int i = 1; i < 1000; i=i+2 ) {
+    skip_insert(skip, (void *)i);
+    printf("Inserting: %d\n", i);
   }
 }
 
