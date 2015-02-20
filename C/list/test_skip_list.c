@@ -12,9 +12,25 @@ int main(int argc, char **argv) {
     skip_insert(skip, (void *)i);
     printf("Inserting: %d\n", i);
   }
+
   for ( int i = 1; i < 1000; i=i+2 ) {
     skip_insert(skip, (void *)i);
     printf("Inserting: %d\n", i);
   }
+
+  int val = skip_search(skip, (void *)400);
+  if ( val == 1 ) {
+    printf("The value 400 was found!\n");
+  } else {
+    printf("The value 400 was not found!\n");
+  }
+
+  val = skip_search(skip, (void *)1200);
+  if ( val == 1 ) {
+    printf("The value 1200 was found!\n");
+  } else {
+    printf("The value 1200 was not found!\n");
+  }
+
 }
 
