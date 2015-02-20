@@ -86,7 +86,7 @@ int skip_insert(struct skip_list_t *skip, void *value) {
     for_each_reverse(pos_h, q_h, &tmp_v->node_h) {
       tmp_h = get_list_node(pos_h, struct skip_node_t, node_h);
 
-      if ( value < tmp_h->data || &tmp_v->node_h == pos_h->prev) {
+      if ( value < tmp_h->data || &tmp_v->node_h == pos_h->prev ) {
         if ( tmp_v->level <= h ) {
           tmp = (struct skip_node_t *)malloc(sizeof(struct skip_node_t));
           tmp->level = tmp_h->level;
@@ -130,5 +130,36 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   }
 
   return 1;
+}
+
+int skip_search(struct skip_list_t *skip, void *value) {
+  struct skip_node_t *tmp, *head, *save = NULL;
+  struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
+  struct node_t *pos_v, *q_v, *pos_h, *q_h;
+
+  head = skip->head;
+
+  for_each(pos_v, q_v, &head->node_v) {
+    tmp_v = get_list_node(pos_v, struct skip_node_t, node_v);
+
+    for_each_reverse(pos_h, q_h, &tmp_v->node_h) {
+      tmp_h = get_list_node(pos_h, struct skip_node_t, node_h);
+
+      if ( tmp_h->data == value ) {
+        return 1;
+      }
+
+      if ( &tmp_v->node_h == pos_h->prev ) {
+        if ( tmp_v->level != 1 ) {
+          q_h = (&tmp_h->node_v)->next;
+          q_h++;
+          pos_v = pos_v->next;
+          tmp_v = get_list_node(pos_v, struct skip_node_t, node_v);
+        }
+      }
+    }
+  }
+
+  return -1;
 }
 
