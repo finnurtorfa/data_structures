@@ -48,3 +48,8 @@ void init_skip_list(struct skip_list_t *skip);
  */
 int skip_insert(struct skip_list_t *skip, void *value);
 
+/**
+ * Search for a value in a skip list
+ */
+int skip_search(struct skip_list_t *skip, void *value);
+
