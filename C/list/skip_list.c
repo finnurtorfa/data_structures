@@ -107,6 +107,8 @@ int skip_insert(struct skip_list_t *skip, void *value) {
         }
 
         if ( tmp_h->level == 1 ) {
+          skip->length++;
+
           return 1;
         }
 
@@ -132,6 +134,8 @@ int skip_insert(struct skip_list_t *skip, void *value) {
       save = tmp;
     }
   }
+
+  skip->length++;
 
   return 1;
 }
