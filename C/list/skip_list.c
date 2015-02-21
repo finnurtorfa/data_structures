@@ -64,6 +64,10 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
   struct node_t *pos_v, *q_v, *pos_h, *q_h;
 
+  if ( skip_search(skip, value) == 1 ) {
+    return -1;
+  }
+
   int h = rand_height(MAX_HEIGHT);
 
   if ( h > skip->height ) {
