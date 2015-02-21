@@ -18,6 +18,13 @@ int main(int argc, char **argv) {
     printf("Inserting: %d\n", i);
   }
 
+  for ( int i = 0; i < 100; i=i+2 ) {
+    skip_insert(skip, (void *)i);
+    printf("Inserting: %d\n", i);
+  }
+
+  printf("The length of the list is %d\n", skip->length);
+
   int val = skip_search(skip, (void *)400);
   if ( val == 1 ) {
     printf("The value 400 was found!\n");
