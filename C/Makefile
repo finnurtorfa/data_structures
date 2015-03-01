@@ -1,7 +1,8 @@
 ### Toolchain Commands
 ##############################
 
-CC = gcc
+CC 			 = gcc
+CPPCHECK = cppcheck
 
 ### General variables
 ##############################
@@ -40,6 +41,7 @@ MSG_ASSEMBLING 					= Assembling:
 MSG_CLEANING 						= Cleaning project:
 MSG_CREATING_LIBRARY		= Creating library:
 MSG_CREATING_BUILD_DIRS	= Creating build directory:
+MSG_STATIC_ANALYSIS 		= Analysing code with cppcheck
 
 ### Source files
 ### List them without directory extensions
@@ -138,6 +140,11 @@ all: begin version $(BUILD_DIRS) $(C_OBJ) end
 .PRECIOUS : $(C_OBJ)
 clang: CC = clang
 clang: begin version $(BUILD_DIRS) $(C_OBJ) end
+
+.PHONY: static_check
+static_check: 
+	@echo $(MSG_STATIC_ANALYSIS)
+	$(CPPCHECK) --enable=all . 2> report.txt
 
 # Compile: create object files from C source files.
 $(OBJ_DIR)/%.o : %.c
