@@ -61,12 +61,10 @@ void * hashmap_get(struct hashmap_t *map, char *key) {
   unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
 
   struct item_t *item = map->buckets[hash];
-  struct item_t *tmp;
-
   struct node_t *pos, *q;
 
   for_each(pos, q, &item->node) {
-    tmp = get_list_node(pos, struct item_t, node);
+    struct item_t *tmp = get_list_node(pos, struct item_t, node);
     if ( strcmp(key, tmp->key) == 0 ) 
       return tmp->value;
   }
@@ -77,12 +75,10 @@ void * hashmap_get(struct hashmap_t *map, char *key) {
 void hashmap_remove(struct hashmap_t *map, char *key) {
   unsigned long hash = __djb_hash((unsigned char *)key) % map->num_buckets;
   struct item_t *item = map->buckets[hash];
-  struct item_t *tmp;
-
   struct node_t *pos, *q;
 
   for_each(pos, q, &item->node) {
-    tmp = get_list_node(pos, struct item_t, node);
+    struct item_t *tmp = get_list_node(pos, struct item_t, node);
 
     if ( strcmp(key, tmp->key) == 0 ) {
       list_remove(pos);

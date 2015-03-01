@@ -141,7 +141,7 @@ int skip_insert(struct skip_list_t *skip, void *value) {
 }
 
 int skip_search(struct skip_list_t *skip, void *value) {
-  struct skip_node_t *tmp, *head, *save = NULL;
+  struct skip_node_t *head;
   struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
   struct node_t *pos_v, *q_v, *pos_h, *q_h;
 

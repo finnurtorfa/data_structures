@@ -30,10 +30,10 @@ int main(int argc, char **argv) {
   printf("Key: key, value: %s\n", res);
 
   res = (char *)hashmap_get(map, "key2");
-  printf("Key: key, value: %s\n", res);
+  printf("Key: key2, value: %s\n", res);
 
   res = (char *)hashmap_get(map, "key3");
-  printf("Key: key, value: %s\n", res);
+  printf("Key: key3, value: %s\n", res);
 
   hashmap_remove(map, "key");
   printf("Hashmap size: %d\n", map->size);
