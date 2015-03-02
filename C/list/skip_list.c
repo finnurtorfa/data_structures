@@ -140,6 +140,22 @@ int skip_insert(struct skip_list_t *skip, void *value) {
   return 1;
 }
 
+void skip_remove(struct skip_list_t *skip, void *value) {
+  struct skip_node_t *tmp, *head, *save = NULL;
+  struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
+  struct node_t *pos_v, *q_v, *pos_h, *q_h;
+
+  head = skip->head;
+
+  for_each(pos_v, q_v, &head->node_v) {
+    tmp_v = get_list_node(pos_v, struct skip_node_t, node_v);
+
+    for_each(pos_h, q_h, &tmp_v->node_h) {
+      tmp_h = get_list_node(pos_h, struct skip_node_t, node_h);
+    }
+  }
+}
+
 int skip_search(struct skip_list_t *skip, void *value) {
   struct skip_node_t *head;
   struct skip_node_t *tmp_v = NULL, *tmp_h = NULL;
